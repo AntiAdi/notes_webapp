@@ -1,0 +1,174 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(270deg, #00ffe0, #ff00e0, #00ffe0);
+  background-size: 600% 600%;
+  animation: moveBG 5s linear infinite;
+  overflow: hidden;
+  position: relative;
+  color: #ffffff;
+}
+
+@keyframes moveBG {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Glowing background circles */
+.background .circles div {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2), rgba(255,255,255,0));
+  filter: blur(100px);
+  animation: float 8s infinite ease-in-out alternate, pulse 4s infinite ease-in-out;
+  z-index: 1;
+}
+
+.background .circles div:nth-child(1) {
+  width: 300px; height: 300px; top: 15%; left: 10%;
+}
+.background .circles div:nth-child(2) {
+  width: 400px; height: 400px; bottom: 10%; right: 20%;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0); }
+  100% { transform: translateY(-100px) rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+/* Container */
+.container {
+  position: relative;
+  z-index: 2;
+  animation: flyin 1s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes flyin {
+  0% { transform: scale(0.6) rotate(-15deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Glass Card */
+.glass-card {
+  width: 380px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 40px 35px;
+  border-radius: 20px;
+  backdrop-filter: blur(40px);
+  box-shadow: 0 0 60px rgba(0, 255, 255, 0.2);
+  transition: all 0.5s ease;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 80px rgba(255, 255, 255, 0.3);
+}
+
+.glass-card h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #00ffe0;
+}
+
+/* Form toggle */
+.form-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.form-toggle button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  color: #aaa;
+  cursor: pointer;
+  transition: 0.3s ease;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.form-toggle .active {
+  color: #fff;
+  border-bottom: 3px solid #00ffe0;
+}
+
+/* Form */
+.form {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.active-form {
+  display: flex;
+}
+
+input {
+  padding: 14px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+input::placeholder {
+  color: #ccc;
+}
+
+input:focus {
+  border-image: linear-gradient(45deg, #00ffe0, #ff00e0) 1;
+  border-width: 2px;
+  border-style: solid;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px #00ffe0aa;
+}
+
+/* Submit button */
+button[type="submit"] {
+  padding: 14px;
+  background: linear-gradient(135deg, #00ffe0, #ff00e0);
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  box-shadow: 0 0 18px #00ffe0aa;
+  position: relative;
+  overflow: hidden;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #ff00e0, #00ffe0);
+  transform: scale(1.08) rotate(1deg);
+  box-shadow: 0 0 25px #ff00e0cc;
+}

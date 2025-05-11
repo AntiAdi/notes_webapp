@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Signup</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+  <div class="background">
+    <div class="circles">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="glass-card">
+      <h1>Notes App</h1>
+
+      <div class="form-toggle">
+        <button id="loginBtn" class="active">Login</button>
+        <button id="signupBtn">Signup</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" action="/login" method="POST" class="form active-form">
+        <input name="username" placeholder="Username" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signupForm" action="/signup" method="POST" class="form">
+        <input name="username" placeholder="New Username" required>
+        <input name="password" type="password" placeholder="New Password" required>
+        <button type="submit">Signup</button>
+      </form>
+
+      <!-- Error message container -->
+      <div id="errorBox"></div>
+    </div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById("loginBtn");
+    const signupBtn = document.getElementById("signupBtn");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+
+    // Toggle between Login and Signup forms
+    loginBtn.addEventListener("click", () => {
+      loginForm.classList.add("active-form");
+      signupForm.classList.remove("active-form");
+      loginBtn.classList.add("active");
+      signupBtn.classList.remove("active");
+    });
+
+    signupBtn.addEventListener("click", () => {
+      signupForm.classList.add("active-form");
+      loginForm.classList.remove("active-form");
+      signupBtn.classList.add("active");
+      loginBtn.classList.remove("active");
+    });
+
+    // Login form submission using Fetch API
+    document.getElementById("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const form = e.target;
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: form.username.value,
+          password: form.password.value
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = "/dashboard.html";
+      } else {
+        showError(data.error || "Login failed");
+      }
+    });
+
+    // Signup form submission using Fetch API
+    document.getElementById("signupForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const form = e.target;
+      const res = await fetch("/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: form.username.value,
+          password: form.password.value
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = "/dashboard.html";
+      } else {
+        showError(data.error || "Signup failed");
+      }
+    });
+
+    // Function to display error messages
+    function showError(msg) {
+      let errBox = document.getElementById("errorBox");
+      if (!errBox) {
+        errBox = document.createElement("div");
+        errBox.id = "errorBox";
+        errBox.style.marginTop = "15px";
+        errBox.style.color = "#ff4d4d";
+        errBox.style.textAlign = "center";
+        document.querySelector(".glass-card").appendChild(errBox);
+      }
+      errBox.textContent = msg;
+    }
+  </script>
+</body>
+</html>
